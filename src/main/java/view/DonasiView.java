@@ -80,15 +80,19 @@ public class DonasiView {
         int jumlah = bacaAngka("Jumlah Barang (1-1000): ", 1, 1000);
 
         try {
+            boolean sukses;
             if (jenis == 1) {
                 String ukuran = bacaTeks("Ukuran Pakaian (S/M/L/XL/All Size): ");
-                controller.tambahDonasiPakaian(id, pendonor, barang, jumlah, ukuran);
+                sukses = controller.tambahDonasiPakaian(id, pendonor, barang, jumlah, ukuran);
             } else {
                 String merek = bacaTeks("Merek Barang: ");
                 boolean berfungsi = bacaYaTidak("Apakah barang masih berfungsi dengan baik? (y/n): ");
-                controller.tambahDonasiElektronik(id, pendonor, barang, jumlah, merek, berfungsi);
+                sukses = controller.tambahDonasiElektronik(id, pendonor, barang, jumlah, merek, berfungsi);
             }
-            System.out.println(">>> Data donasi berhasil ditambahkan! <<<");
+
+            if (sukses) {
+                System.out.println(">>> Data donasi berhasil disimpan ke Database! <<<");
+            }
         } catch (IllegalArgumentException e) {
             System.out.println("Gagal menambahkan data: " + e.getMessage());
         }
@@ -97,13 +101,12 @@ public class DonasiView {
     private void menuTampilkan() {
         List<Donasi> list = controller.getAllDonasi();
         if (list.isEmpty()) {
-            System.out.println("\nBelum ada data donasi yang tersimpan.");
+            System.out.println("\nBelum ada data donasi tersimpan di Database.");
             return;
         }
 
-        System.out.println("\n=== DAFTAR DONASI BARANG BEKAS ===");
+        System.out.println("\n=== DAFTAR DONASI BARANG BEKAS (DATABASE) ===");
         for (int i = 0; i < list.size(); i++) {
-            // Polymorphism: Pemanggilan method overloading tampilkanInfo(int)
             System.out.println(list.get(i).tampilkanInfo(i + 1));
         }
     }
@@ -117,8 +120,7 @@ public class DonasiView {
 
         menuTampilkan();
         int nomor = bacaAngka("\nMasukkan nomor data yang ingin diubah: ", 1, list.size());
-        int index = nomor - 1;
-        Donasi target = list.get(index);
+        Donasi target = list.get(nomor - 1);
 
         System.out.println("\n--- Mengubah Data ID: " + target.getIdDonasi() + " ---");
         try {
@@ -126,18 +128,21 @@ public class DonasiView {
             String barangBaru = bacaTeks("Nama Barang Baru: ");
             int jumlahBaru = bacaAngka("Jumlah Barang Baru (1-1000): ", 1, 1000);
 
+            boolean sukses = false;
             if (target instanceof DonasiPakaian) {
                 String ukuranBaru = bacaTeks("Ukuran Pakaian Baru: ");
-                controller.ubahDonasiPakaian(index, pendonorBaru, barangBaru, jumlahBaru, ukuranBaru);
+                sukses = controller.ubahDonasiPakaian(target.getIdDonasi(), pendonorBaru, barangBaru, jumlahBaru, ukuranBaru);
             } else if (target instanceof DonasiElektronik) {
                 String merekBaru = bacaTeks("Merek Baru: ");
                 boolean berfungsiBaru = bacaYaTidak("Masih berfungsi baik? (y/n): ");
-                controller.ubahDonasiElektronik(index, pendonorBaru, barangBaru, jumlahBaru, merekBaru, berfungsiBaru);
+                sukses = controller.ubahDonasiElektronik(target.getIdDonasi(), pendonorBaru, barangBaru, jumlahBaru, merekBaru, berfungsiBaru);
             }
-            System.out.println(">>> Data donasi berhasil diperbarui! <<<");
+
+            if (sukses) {
+                System.out.println(">>> Data donasi di Database berhasil diperbarui! <<<");
+            }
         } catch (IllegalArgumentException e) {
             System.out.println("Gagal mengubah data: " + e.getMessage());
-            System.out.println("Perubahan dibatalkan secara otomatis (Data lama tetap aman).");
         }
     }
 
@@ -150,9 +155,11 @@ public class DonasiView {
 
         menuTampilkan();
         int nomor = bacaAngka("\nMasukkan nomor data yang ingin dihapus: ", 1, list.size());
-        if (bacaYaTidak("Apakah Anda yakin ingin menghapus data ini? (y/n): ")) {
-            if (controller.hapusDonasi(nomor - 1)) {
-                System.out.println(">>> Data donasi berhasil dihapus! <<<");
+        Donasi target = list.get(nomor - 1);
+
+        if (bacaYaTidak("Apakah Anda yakin menghapus ID " + target.getIdDonasi() + " dari Database? (y/n): ")) {
+            if (controller.hapusDonasi(target.getIdDonasi())) {
+                System.out.println(">>> Data donasi berhasil dihapus dari Database! <<<");
             }
         } else {
             System.out.println("Penghapusan dibatalkan.");
@@ -170,7 +177,7 @@ public class DonasiView {
             for (int i = 0; i < hasil.size(); i++) {
                 Donasi d = hasil.get(i);
                 System.out.println((i + 1) + ". " + d.getNamaPendonor() + " - " + d.getNamaBarang());
-                System.out.println("   Rincian Spesifik: " + d.getDetailRincian()); // Penggunaan explicit getter/rincian
+                System.out.println("   Rincian Spesifik: " + d.getDetailRincian());
             }
         }
     }

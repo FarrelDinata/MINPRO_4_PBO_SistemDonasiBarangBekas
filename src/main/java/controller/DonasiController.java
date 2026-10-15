@@ -4,93 +4,59 @@
  */
 package controller;
 
-import java.util.ArrayList;
 import java.util.List;
 import model.Donasi;
+import model.DonasiDAO;
 import model.DonasiElektronik;
 import model.DonasiPakaian;
 
 public class DonasiController {
 
-    private final List<Donasi> daftarDonasi;
+    private final DonasiDAO donasiDAO;
 
     public DonasiController() {
-        this.daftarDonasi = new ArrayList<>();
-        isiDummyData();
-    }
-
-    private void isiDummyData() {
-        daftarDonasi.add(new DonasiPakaian("D001", "Budi Santoso", "Jaket Hoodie", 3, "L"));
-        daftarDonasi.add(new DonasiPakaian("D002", "Siti Aminah", "Kemeja Batik", 5));
-        daftarDonasi.add(new DonasiElektronik("D003", "Andi Wijaya", "Kipas Angin", 2, "Miyako", true));
-        daftarDonasi.add(new DonasiElektronik("D004", "Rina Lestari", "Setrika", 1, "Philips", false));
+        this.donasiDAO = new DonasiDAO();
     }
 
     public List<Donasi> getAllDonasi() {
-        return daftarDonasi;
+        return donasiDAO.getAll();
     }
 
     public boolean isIdExist(String id) {
-        for (Donasi d : daftarDonasi) {
-            if (d.getIdDonasi().equalsIgnoreCase(id.trim())) {
-                return true;
-            }
-        }
-        return false;
+        return donasiDAO.getById(id) != null;
     }
 
-    public void tambahDonasiPakaian(String id, String pendonor, String barang, int jumlah, String ukuran) {
+    public boolean tambahDonasiPakaian(String id, String pendonor, String barang, int jumlah, String ukuran) {
         if (isIdExist(id)) {
-            throw new IllegalArgumentException("ID Donasi " + id + " sudah digunakan!");
+            throw new IllegalArgumentException("ID Donasi " + id + " sudah terdaftar di database!");
         }
         DonasiPakaian p = new DonasiPakaian(id, pendonor, barang, jumlah, ukuran);
-        daftarDonasi.add(p);
+        return donasiDAO.insert(p);
     }
 
-    public void tambahDonasiElektronik(String id, String pendonor, String barang, int jumlah, String merek, boolean berfungsi) {
+    public boolean tambahDonasiElektronik(String id, String pendonor, String barang, int jumlah, String merek, boolean berfungsi) {
         if (isIdExist(id)) {
-            throw new IllegalArgumentException("ID Donasi " + id + " sudah digunakan!");
+            throw new IllegalArgumentException("ID Donasi " + id + " sudah terdaftar di database!");
         }
         DonasiElektronik e = new DonasiElektronik(id, pendonor, barang, jumlah, merek, berfungsi);
-        daftarDonasi.add(e);
+        return donasiDAO.insert(e);
     }
 
-    public void ubahDonasiPakaian(int index, String pendonorBaru, String barangBaru, int jumlahBaru, String ukuranBaru) {
-        Donasi d = daftarDonasi.get(index);
-        if (!(d instanceof DonasiPakaian)) {
-            throw new IllegalArgumentException("Tipe objek tidak sesuai!");
-        }
-
-        // Pengubahan dilakukan bersamaan (atomic update) setelah validasi instansiasi berhasil
-        DonasiPakaian pBaru = new DonasiPakaian(d.getIdDonasi(), pendonorBaru, barangBaru, jumlahBaru, ukuranBaru);
-        daftarDonasi.set(index, pBaru);
+    public boolean ubahDonasiPakaian(String id, String pendonorBaru, String barangBaru, int jumlahBaru, String ukuranBaru) {
+        DonasiPakaian pBaru = new DonasiPakaian(id, pendonorBaru, barangBaru, jumlahBaru, ukuranBaru);
+        return donasiDAO.update(pBaru);
     }
 
-    public void ubahDonasiElektronik(int index, String pendonorBaru, String barangBaru, int jumlahBaru, String merekBaru, boolean berfungsiBaru) {
-        Donasi d = daftarDonasi.get(index);
-        if (!(d instanceof DonasiElektronik)) {
-            throw new IllegalArgumentException("Tipe objek tidak sesuai!");
-        }
-
-        DonasiElektronik eBaru = new DonasiElektronik(d.getIdDonasi(), pendonorBaru, barangBaru, jumlahBaru, merekBaru, berfungsiBaru);
-        daftarDonasi.set(index, eBaru);
+    public boolean ubahDonasiElektronik(String id, String pendonorBaru, String barangBaru, int jumlahBaru, String merekBaru, boolean berfungsiBaru) {
+        DonasiElektronik eBaru = new DonasiElektronik(id, pendonorBaru, barangBaru, jumlahBaru, merekBaru, berfungsiBaru);
+        return donasiDAO.update(eBaru);
     }
 
-    public boolean hapusDonasi(int index) {
-        if (index >= 0 && index < daftarDonasi.size()) {
-            daftarDonasi.remove(index);
-            return true;
-        }
-        return false;
+    public boolean hapusDonasi(String id) {
+        return donasiDAO.delete(id);
     }
 
     public List<Donasi> cariBerdasarkanPendonor(String nama) {
-        List<Donasi> hasil = new ArrayList<>();
-        for (Donasi d : daftarDonasi) {
-            if (d.getNamaPendonor().toLowerCase().contains(nama.toLowerCase())) {
-                hasil.add(d);
-            }
-        }
-        return hasil;
+        return donasiDAO.searchByPendonor(nama);
     }
 }

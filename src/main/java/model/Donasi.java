@@ -4,10 +4,7 @@
  */
 package model;
 
-/**
- *
- * @author DELL
- */
+
 public abstract class Donasi implements StatusDonasi {
 
     private String idDonasi;
@@ -15,7 +12,7 @@ public abstract class Donasi implements StatusDonasi {
     private String namaBarang;
     private int jumlahBarang;
 
-    // Constructor utama
+    
     public Donasi(String idDonasi, String namaPendonor, String namaBarang, int jumlahBarang) {
         setIdDonasi(idDonasi);
         setNamaPendonor(namaPendonor);
@@ -23,12 +20,12 @@ public abstract class Donasi implements StatusDonasi {
         setJumlahBarang(jumlahBarang);
     }
 
-    // Overloading Constructor: Default jumlahBarang = 1
+    
     public Donasi(String idDonasi, String namaPendonor, String namaBarang) {
         this(idDonasi, namaPendonor, namaBarang, 1);
     }
 
-    // ===== Getter =====
+    
     public String getIdDonasi() {
         return idDonasi;
     }
@@ -45,7 +42,7 @@ public abstract class Donasi implements StatusDonasi {
         return jumlahBarang;
     }
 
-    // ===== Setter dengan Validasi Encapsulation =====
+    
     public void setIdDonasi(String idDonasi) {
         this.idDonasi = validasiTeks(idDonasi, "ID Donasi");
     }
@@ -72,11 +69,11 @@ public abstract class Donasi implements StatusDonasi {
         return teks.trim();
     }
 
-    // Abstract Method (Wajib di-override subclass)
+    
     public abstract String getKategori();
     public abstract String getDetailRincian();
 
-    // Overriding Method
+    
     public String tampilkanInfo() {
         return "[" + getKategori() + "] ID: " + getIdDonasi()
                 + " | Pendonor: " + getNamaPendonor()
@@ -85,12 +82,12 @@ public abstract class Donasi implements StatusDonasi {
                 + " | Status: " + cekKelayakanPenyaluran();
     }
 
-    // Overloading Method: Tampilkan info dengan nomor urut
+    
     public String tampilkanInfo(int nomor) {
         return nomor + ". " + tampilkanInfo() + "\n   Detail Rincian: " + getDetailRincian();
     }
 
-    // Overloading Method: Tampilkan info dengan kustom header
+    
     public String tampilkanInfo(String header) {
         return "=== " + header + " ===\n" + tampilkanInfo();
     }

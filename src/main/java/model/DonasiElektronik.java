@@ -19,7 +19,6 @@ public class DonasiElektronik extends Donasi {
         setMasihBerfungsi(masihBerfungsi);
     }
 
-    // Overloading Constructor
     public DonasiElektronik(String idDonasi, String namaPendonor, String namaBarang, int jumlahBarang, String merek) {
         this(idDonasi, namaPendonor, namaBarang, jumlahBarang, merek, true);
     }

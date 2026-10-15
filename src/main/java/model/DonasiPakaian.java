@@ -17,7 +17,6 @@ public class DonasiPakaian extends Donasi {
         setUkuran(ukuran);
     }
 
-    // Overloading Constructor
     public DonasiPakaian(String idDonasi, String namaPendonor, String namaBarang, int jumlahBarang) {
         this(idDonasi, namaPendonor, namaBarang, jumlahBarang, "All Size");
     }
