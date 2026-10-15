@@ -1,6 +1,10 @@
-# Mini Project 4 - Sistem Donasi Barang Bekas (Integrasi Database JDBC & DAO)
+<img width="530" height="229" alt="image" src="https://github.com/user-attachments/assets/59219fa2-e1f5-4f12-939a-ae971440dadd" /># Mini Project 4 - Sistem Donasi Barang Bekas (Integrasi Database JDBC & DAO)
 
 **Nama Repository**: `Minpro-4-PBO-SistemDonasiBarangBekas`
+
+**Nama**: 'Farrel Fazzadinata Sumarna'
+
+**NIM**: '2509116111'
 
 ---
 
@@ -89,31 +93,3 @@ Proyek ini disusun secara modular berbasis pola arsitektur MVC dan JDBC Data Lay
 
 5. **SS 5 (Hapus Data / Delete JDBC)**:
    - <img width="710" height="292" alt="image" src="https://github.com/user-attachments/assets/2f011fcc-ec26-4f73-bb3e-ce94daa0788f" />
-
-
----
-
-### Contoh Tampilan Console Text:
-
-```text
-==========================================
-   SISTEM MANAJEMEN DONASI BARANG BEKAS   
-==========================================
-1. Tambah Data Donasi
-2. Tampilkan Seluruh Donasi
-3. Ubah Data Donasi
-4. Hapus Data Donasi
-5. Cari Donasi Berdasarkan Pendonor
-0. Keluar
-------------------------------------------
-Pilih menu (0-5): 2
-
-=== DAFTAR DONASI BARANG BEKAS (DATABASE) ===
-1. [Pakaian] ID: D001 | Pendonor: Budi Santoso | Barang: Jaket Hoodie | Jumlah: 3 unit | Status: Siap Disalurkan ke Panti/Posko | Ukuran: L
-   Detail Rincian: Ukuran Pakaian: L
-2. [Pakaian] ID: D002 | Pendonor: Siti Aminah | Barang: Kemeja Batik | Jumlah: 5 unit | Status: Siap Disalurkan ke Panti/Posko | Ukuran: All Size
-   Detail Rincian: Ukuran Pakaian: All Size
-3. [Elektronik] ID: D003 | Pendonor: Andi Wijaya | Barang: Kipas Angin | Jumlah: 2 unit | Status: Siap Disalurkan | Merek: Miyako | Berfungsi: Ya
-   Detail Rincian: Merek: Miyako | Kondisi Berfungsi: Ya
-4. [Elektronik] ID: D004 | Pendonor: Rina Lestari | Barang: Setrika | Jumlah: 1 unit | Status: Butuh Perbaikan/Service | Merek: Philips | Berfungsi: Tidak
-   Detail Rincian: Merek: Philips | Kondisi Berfungsi: Tidak
