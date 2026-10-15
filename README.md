@@ -1,10 +1,10 @@
-<img width="530" height="229" alt="image" src="https://github.com/user-attachments/assets/59219fa2-e1f5-4f12-939a-ae971440dadd" /># Mini Project 4 - Sistem Donasi Barang Bekas (Integrasi Database JDBC & DAO)
+# Mini Project 4 - Sistem Donasi Barang Bekas (Integrasi Database JDBC & DAO)
 
 **Nama Repository**: `Minpro-4-PBO-SistemDonasiBarangBekas`
 
-**Nama**: 'Farrel Fazzadinata Sumarna'
+**Nama**: Farrel Fazzadinata Sumarna
 
-**NIM**: '2509116111'
+**NIM**: 2509116111
 
 ---
 
